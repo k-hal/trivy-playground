@@ -4,7 +4,8 @@ jobs:
       - image: docker:stable-git
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 20.10.7
       - run:
           name: Build image
           command: docker build -t trivy-ci-test:${CIRCLE_SHA1} .
@@ -16,6 +17,8 @@ jobs:
       - run:
           name: Scan the local image with trivy
           command: trivy --exit-code 0 --no-progress trivy-ci-test:${CIRCLE_SHA1}
+
+      - run: trivy -v
 
 workflows:
   version: 2
