@@ -22,3 +22,12 @@ workflows:
   release:
     jobs:
       - build
+  daily_workflow:
+    triggers:
+      - schedule:
+          cron: "0 20 * * *"
+          filters:
+            branches:
+              only: /master/
+    jobs:
+      - build
